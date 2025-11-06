@@ -1,3 +1,7 @@
+OBSERVAÇÃO!!!!!!!!!!!!!!!!
+
+NA AZURE O PROJETO ESTÁ COM O NOME Sprint_03_MOTTHRU MAS SE TRATA DE TODA A ENTREGA, INCLUINDO A SPRINT 4. 
+
 Mottu IoT — Plano de Testes (Azure Boards) + Automação (Postman)
 
 Resumo: este repositório contém o plano de testes manuais (Azure Boards) e a automação de testes (Postman/Newman) do projeto Mottu IoT, desenvolvido como parte da Sprint 03 – Challenge FIAP 2025.
