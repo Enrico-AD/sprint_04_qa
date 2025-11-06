@@ -1,0 +1,272 @@
+{
+  "info": {
+    "name": "Mottu IoT API — Testes Automatizados",
+    "_postman_id": "aaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+    "description": "Coleção para validar endpoints principais do projeto Mottu (IoT + API).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Cadastrar Sensor (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/sensores",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sensores"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"idSensor\": \"S-ESP32-001\", \"tipo\": \"ESP32\", \"protocolo\": \"LoRaWAN\", \"ativo\": true}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.expect(json).to.have.property('idSensor', 'S-ESP32-001');"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Registrar Moto (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/motos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "motos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"idMoto\": 2001, \"placa\": \"MTT1A23\", \"modelo\": \"CG 160\", \"idSensor\": \"S-ESP32-001\", \"status\": \"FORA_PATIO\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "const json = pm.response.json();",
+              "pm.expect(json).to.have.property('idMoto', 2001);",
+              "pm.collectionVariables.set('motoId', json.idMoto);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Evento ENTRADA pátio (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/eventos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "eventos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"idEvento\": 90001, \"idMoto\": 2001, \"tipo\": \"ENTRADA\", \"timestamp\": \"2025-11-05T10:00:00Z\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultar Moto (status NO_PATIO)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/motos/{{motoId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "motos",
+            "{{motoId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.expect(json).to.have.property('status');",
+              "pm.expect(json.status).to.eql('NO_PATIO');"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Evento SAIDA pátio (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/eventos",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "eventos"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"idEvento\": 90002, \"idMoto\": 2001, \"tipo\": \"SAIDA\", \"timestamp\": \"2025-11-05T10:30:00Z\"}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultar Moto (status FORA_PATIO)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/motos/{{motoId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "motos",
+            "{{motoId}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const json = pm.response.json();",
+              "pm.expect(json).to.have.property('status');",
+              "pm.expect(json.status).to.eql('FORA_PATIO');"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Erro Sensor duplicado (409/400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/sensores",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "sensores"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\"idSensor\": \"S-ESP32-001\", \"tipo\": \"ESP32\", \"protocolo\": \"LoRaWAN\", \"ativo\": true}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 409 ou 400', () => {",
+              "  pm.expect([409,400]).to.include(pm.response.code);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
