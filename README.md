@@ -83,18 +83,5 @@ git add .
 git commit -m "Entrega: Testes manuais (Azure Boards) + automação (Postman) - Mottu IoT"
 git push -u origin develop
 
-✅ Checklist final (para evitar penalidade)
-[✔] Repositório público, branch develop
-[✔] CSV importado no Azure Boards
-[✔] Professor com acesso de membro
-[✔] 4+ casos automatizados (Postman)
-[✔] Vídeo público de execução e link no README
-[✔] README completo com links e instruções
-
-📌 Observações finais
-Se a API retornar 422 em vez de 400, ajuste o teste no Postman.
-Se houver outras rotas (ex: /api/v1/motos), atualize a coleção.
-Use sempre os dados controlados (2001, S-ESP32-001, 90001, 90002) para garantir repetibilidade dos testes.
-A entrega segue o padrão de 20% por etapa, com conformidade à rubrica da Sprint 03 (Azure Boards + automação Postman).
 
 
