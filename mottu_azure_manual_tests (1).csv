@@ -1,0 +1,12 @@
+Title,Step Action,Step Expected,Expected Result,Priority,Iteration Path,Tags
+TC-55.1,Registrar dados válidos no banco e gerar log de auditoria,1. Enviar POST /api/telemetria com dados válidos. 2. Validar resposta 201. 3. Conferir registro na tabela telemetria e na tabela auditoria.,HTTP 201 Created; registros salvos em telemetria e auditoria.,Alta,Mottu/Release-1/Sprint-3,API;Banco;Log
+TC-56.1,Consultar todos os sensores cadastrados,1. Enviar GET /api/sensores. 2. Validar status 200. 3. Conferir lista de sensores.,HTTP 200 OK; lista de sensores retornada.,Alta,Mottu/Release-1/Sprint-3,API;Sensor;Consulta
+TC-57.1,Atualizar status de sensor ativo,1. Enviar PUT /api/sensores/S-ESP32-001. 2. Validar retorno 200. 3. Confirmar ativo=false.,HTTP 200 OK; sensor atualizado.,Alta,Mottu/Release-1/Sprint-3,API;Cliente;Atualizacao
+TC-58.1,Verificar estrutura padrão de resposta,1. Executar GET /api/sensores. 2. Validar status 200. 3. Verificar estrutura JSON padrão.,HTTP 200 OK; estrutura com status/data/timestamp.,Média,Mottu/Release-1/Sprint-3,API;Padrao;Consistencia
+TC-59.1,Registrar falha de comunicação IoT → API,1. Simular timeout de conexão. 2. Validar log de erro. 3. Conferir dados do log.,Log registrado com tipo Timeout e origem IoT.,Alta,Mottu/Release-1/Sprint-3,API;IoT;Falha
+TC-60.1,Logar erro 500 no servidor,1. Acessar rota inválida. 2. Validar 500. 3. Conferir registro no log.,HTTP 500 Internal Server Error; log salvo com origem=API.,Alta,Mottu/Release-1/Sprint-3,API;Erro;Servidor
+TC-61.1,Visualizar dashboard com logs de auditoria,1. Login como ADMIN. 2. Acessar /dashboard/auditoria. 3. Validar exibição dos gráficos.,Dashboard exibe logs e gráficos de ações.,Alta,Mottu/Release-1/Sprint-4,Dashboard;Auditoria;UI
+TC-62.1,Registrar status de doca ocupada ou livre,1. Enviar payload com status OCUPADA. 2. Validar cor vermelha na doca no dashboard.,HTTP 200 OK; dashboard atualizado.,Alta,Mottu/Release-1/Sprint-4,IoT;Docas;Sensor
+TC-64.1,Associar sensor a moto,1. Enviar PUT /api/motos/2001. 2. Validar 200. 3. Conferir vínculo no GET /api/motos/2001.,HTTP 200 OK; moto vinculada ao sensor.,Alta,Mottu/Release-1/Sprint-4,API;Sensor;Moto
+TC-68.1,Login usuário válido,1. Enviar POST /api/login. 2. Validar token JWT. 3. Acessar rota restrita.,HTTP 200 OK; token válido gerado.,Alta,Mottu/Release-1/Sprint-4,Auth;Login;Seguranca
+TC-70.1,Registrar ação de login do usuário,1. Realizar login. 2. Consultar /api/logs/acoes. 3. Validar registro de login.,HTTP 200 OK; log criado com acao=LOGIN.,Alta,Mottu/Release-1/Sprint-5,Auditoria;Usuario;Login
